@@ -22,18 +22,18 @@ def on_press(key):
     except: 
         k = key.name # other keys
     
-    if k == '0':
+    if k == 'a':
         print("0")
-        client.publish("cdam/lcd","Device Off")            # Send message to rpi
-    elif k == '1':
+        client.publish("cdam/lcd","Device_Off")            # Send message to rpi
+    elif k == 'b':
         print("1")
-        client.publish("cdam/lcd","Device On")             # Send message to rpi
+        client.publish("cdam/lcd","Device_On")             # Send message to rpi
     elif k == 'f':
         print("f")
-        client.publish("cdam/lcd", "Listening female")   # Send "f" character to rpi
+        client.publish("cdam/lcd", "Listening_female")   # Send "f" character to rpi
     elif k == 'm':
         print("m")
-        client.publish("cdam/lcd", "Listening male")     # Send "m" character to rpi
+        client.publish("cdam/lcd", "Listening_male")     # Send "m" character to rpi
 
 if __name__ == '__main__':
     #setup the keyboard event listener
