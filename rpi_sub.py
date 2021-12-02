@@ -1,7 +1,6 @@
 # Rpi Subscriber
 """EE 250 Final Project
-Team:
-Chiara Di Camillo, Anaka Mahesh
+Team: Chiara Di Camillo, Anaka Mahesh
 Run rpi_pub_and_sub.py on your Raspberry Pi."""
 
 import paho.mqtt.client as mqtt
@@ -13,13 +12,16 @@ from grove_rgb_lcd import *
 
 # Define custom callbacks
 def callback_lcd(client, userdata, message):
-    # Check for correct string formatting (a, d, s, or w)
-    if (str(message.payload, "utf-8" == "Device Off") or str(message.payload, "utf-8" == "Device On")):
+    # Check for correct string formatting
+    if str(message.payload, "utf-8") == "ON":
         print("Received a message on", message.topic, ":", str(message.payload, "utf-8"))
-        setText_norefresh(str(message.payload, 'utf-8'))    # Send letter to be displayed on LCD
-    if (str(message.payload, "utf-8" == "Listening female") or str(message.payload, "utf-8" == "Listening male")):
+        setText_norefresh("Device is ON")
+    elif str(message.payload, "utf-8") == "OFF":
         print("Received a message on", message.topic, ":", str(message.payload, "utf-8"))
-        setText_norefresh( "/n" + str(message.payload, 'utf-8'))    # Send letter to be displayed on LCD
+        setText_norefresh("Device is OFF")
+    elif (str(message.payload, "utf-8") == "m") or (str(message.payload, "utf-8") == "f"):
+        print("Received a message on", message.topic, ":", str(message.payload, "utf-8"))
+        setText_norefresh(str(message.payload, 'utf-8'))
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -46,7 +48,3 @@ if __name__ == '__main__':
 
     while True:
         time.sleep(1)
-        #if grovepi.digitalRead(button) == 1:            # Check if button is pressed
-        #    client.publish("dicamillo/button", "Button pressed!")
-        #ranger_value = grovepi.ultrasonicRead(PORT)     # Read ranger distance
-        #client.publish("dicamillo/ultrasonicRanger", str(ranger_value))
