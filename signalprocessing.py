@@ -15,13 +15,6 @@ import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
 
-blueled = 3                     # Connect led to digital port D3
-redled = 2                      # Connect led to digital port D2
-pinMode(redled,"OUTPUT")        # Init output for led
-pinMode(blueled,"OUTPUT")       # Init output for led
-digitalWrite(redled,0)		      # Init led as off
-digitalWrite(blueled,0)		      # Init led as off
-
 MAX_FRQ = 2000
 SLICE_SIZE = 0.1 #seconds
 WINDOW_SIZE = 0.2 #seconds
@@ -93,21 +86,9 @@ def main(file):
         result = get_max_frq(frq, abs(sample_slice_fft))
 
         if (min_male_freq < result < max_male_freq):
-          digitalWrite(ledred,0)
-          digitalWrite(ledblue,1)
+          #return()
         elif (min_female_freq < result < max_female_freq):
-          digitalWrite(ledblue,0)
-          digitalWrite(ledred,1)
-
-        #TODO: calculate the locations of the upper and lower FFT peak using get_peak_frqs()
-        #lower_frq, higher_frq = get_peak_frqs(frq, sample_slice_fft)
-        
-        #TODO: print the values and find the number that corresponds to the numbers
-        #print('Lower peak freq: ' + str(lower_frq))
-        #print('Higher peak freq: ' + str(higher_frq))
-        #value = get_number_from_frq(lower_frq, higher_frq)
-        #print('Number: ' + str(value))
-        #output = str(output) + str(value)   # update sequence of numbers for output
+          #return()
 
         #Incrementing the start and end window for FFT analysis
         start_index += int(WINDOW_SIZE*sample_rate)
