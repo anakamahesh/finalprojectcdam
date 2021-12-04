@@ -1,12 +1,16 @@
-# Laptop pub
-"""EE 250 Final Project
+"""
+EE 250 Final Project
+Laptop Publisher
 Team: Chiara Di Camillo, Anaka Mahesh
-Run laptop_pub.py in a separate terminal on your VM."""
+Github link: https://github.com/usc-ee250-fall2021/finalprojectcdam
+"""
 
 import paho.mqtt.client as mqtt
 import time
 from pynput import keyboard
-import sys
+import numpy as np
+from pydub import AudioSegment
+import signalprocessing
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -22,18 +26,39 @@ def on_press(key):
     except: 
         k = key.name # other keys
     
-    if k == '0':
-        print("0")
-        client.publish("cdam/lcd","Device Off")            # Send message to rpi
-    elif k == '1':
-        print("1")
-        client.publish("cdam/lcd","Device On")             # Send message to rpi
-    elif k == 'f':
-        print("f")
-        client.publish("cdam/lcd", "Listening female")   # Send "f" character to rpi
-    elif k == 'm':
-        print("m")
-        client.publish("cdam/lcd", "Listening male")     # Send "m" character to rpi
+    # Send corresponding messages to the RPI on designated topic based on key press
+    if (k == 'a'): # Reset the LCD Display
+        print("\nReset display")
+        client.publish("cdam/lcd","RESET")           
+        client.publish("cdam/lights", "LIGHTS_OFF")
+
+    if (k == 'f'):  # Check for female voice
+        print("\nListening for female voice")
+        client.publish("cdam/lcd", "Listen: female")
+        result = signalprocessing.main("test.wav")          # Use FFT to get highest peak frq - returns f/m based on if frq is in female/male frq ranges
+        print(result)
+        if result == 'f':                                   # If returned female - voice and expected gender matches
+            client.publish("cdam/lights", "RED_LIGHTS")
+        else:                                               # Else returned male - voice and expected gender don't match
+            client.publish("cdam/lcd","Imposter!")
+            client.publish("cdam/lights", "LIGHTS_OFF")
+            client.publish("cdam/buzzer", "ON")
+            time.sleep(1)
+            client.publish("cdam/buzzer", "OFF")
+
+    elif (k == 'm'):  # Check for male voice
+        print("\nListening for male voice")
+        client.publish("cdam/lcd", "Listen: male")
+        result = signalprocessing.main("test.wav")          # Use FFT to get highest peak frq - returns f/m based on if frq is in female/male frq ranges
+        print(result)
+        if result == 'm':                                   # If returned female - voice and expected gender matches
+            client.publish("cdam/lights", "BLUE_LIGHTS")
+        else:                                               # Else returned male - voice and expected gender don't match
+            client.publish("cdam/lcd","Imposter!")
+            client.publish("cdam/lights", "LIGHTS_OFF")
+            client.publish("cdam/buzzer", "ON")
+            time.sleep(1)
+            client.publish("cdam/buzzer", "OFF")
 
 if __name__ == '__main__':
     #setup the keyboard event listener
