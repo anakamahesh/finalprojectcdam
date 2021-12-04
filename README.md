@@ -1,8 +1,11 @@
 EE250 Final Project
+
 By: Chiara Di Camillo and Anaka Mahesh
+
 Link to video demo: 
 
 Instructions to execute the code: 
+
 1.) The first thing to do when you want to execute the code is that there need to be 4 terminals open in the VM. Each one will correlate to each of the 4 programs that will be run to execute this system. 
 
 2.) The programs that need to be run on different terminals are laptop_pub, laptop_sub, and rpi_pub_and_sub. Each of these programs will connect to a server/broker since we are conducting a pub/sub-model. 
