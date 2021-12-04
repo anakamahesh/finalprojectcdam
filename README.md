@@ -3,6 +3,7 @@ EE250 Final Project
 By: Chiara Di Camillo and Anaka Mahesh
 
 Link to video demo: https://drive.google.com/file/d/1oSqXkoZKBwmEuEnm5BZn6pMJ6tz8SUxC/view?usp=sharing
+Link to git repo: https://github.com/anakamahesh/finalprojectcdam/tree/finalproject/m_audio
 
 Instructions to execute the code: 
 
