@@ -2,7 +2,7 @@ EE250 Final Project
 
 By: Chiara Di Camillo and Anaka Mahesh
 
-Link to video demo: 
+Link to video demo: https://drive.google.com/file/d/1oSqXkoZKBwmEuEnm5BZn6pMJ6tz8SUxC/view?usp=sharing
 
 Instructions to execute the code: 
 
